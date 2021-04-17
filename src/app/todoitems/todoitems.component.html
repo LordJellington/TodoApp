@@ -1,0 +1,34 @@
+<h2 *ngIf="loading">Loading...</h2>
+
+<div *ngIf="!loading">
+
+    <h1>Things that need doing</h1>
+
+    <p *ngIf="!todoItems.length">Nothing to do :)</p>
+
+    <ul class="todolist">
+        <li *ngFor="let todoItem of todoItems">
+            <app-todoitem-detail 
+                [todoItem]="todoItem" 
+                (itemUpdated)="itemUpdated($event)"
+                (itemDeleted)="itemDeleted($event)"
+            >
+            </app-todoitem-detail>
+        </li>
+    </ul>
+
+    <div class="addtodo">
+        <h3>Make a new thing to do</h3>
+        <div>
+            <label for="name">Name:</label>
+            <input [(ngModel)]="newItem.name" autoComplete="disabled" type="text">
+        </div>
+        <div>
+            <label for="isComplete">Is Complete</label>
+            <input [(ngModel)]="newItem.isComplete" type="checkbox">
+        </div>
+
+        <button class="addnewitem" (click)="addNewItem()">Create</button>
+    </div>
+
+</div>

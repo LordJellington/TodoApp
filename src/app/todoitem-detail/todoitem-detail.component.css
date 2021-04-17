@@ -1,0 +1,22 @@
+.todoitem-wrapper {
+    display: block;
+}
+
+.todoitem-wrapper .idfield {
+    margin-right: 5px;
+}
+
+.todoitem-wrapper .namefield {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.todoitem-wrapper .iscompletefield {
+    display: inline-block;
+}
+
+.todoitem-wrapper .editButton, 
+.todoitem-wrapper .saveButton,
+.todoitem-wrapper .deleteButton {
+    margin-left: 10px;
+}

@@ -1,0 +1,22 @@
+<div class="todoitem-wrapper">
+    
+    <span class="idfield">{{todoItem.id}}</span>
+    
+    <div class="namefield">
+        <label for="name">Name:</label>
+        <span *ngIf="!editMode">{{todoItem.name}}</span>
+        <input *ngIf="editMode" [(ngModel)]="todoItem.name" placeholder="name" autocomplete="disabled">
+    </div>
+    
+    <div class="iscompletefield">
+        <label for="isComplete">Is Complete:</label>
+        <span *ngIf="!editMode && todoItem.isComplete">Yep</span>
+        <span *ngIf="!editMode && !todoItem.isComplete">Nope</span>
+        <input *ngIf="editMode" id="isCompleteEdit" [(ngModel)]="todoItem.isComplete" type="checkbox">
+    </div>
+
+    <button *ngIf="!editMode" class="editButton" (click)="editRecord()">Edit</button>
+    <button *ngIf="!editMode" class="deleteButton" (click)="deleteRecord()">Delete</button>
+    <button *ngIf="editMode" class="saveButton" (click)="saveRecord()">Save</button>
+
+</div>

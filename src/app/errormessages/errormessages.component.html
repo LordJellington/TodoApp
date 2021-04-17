@@ -1,0 +1,10 @@
+<div *ngIf="errorHandlerService.messages.length">
+
+    <h2>Errors</h2>
+    <button class="clear" (click)="errorHandlerService.clear()">Clear errors</button>
+
+    <div class="errormessage" *ngFor='let message of errorHandlerService.messages'>
+        {{message}}
+    </div>
+
+</div>
