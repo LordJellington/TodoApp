@@ -1,13 +1,13 @@
-<h2 *ngIf="loading">Loading...</h2>
+<h2 *ngIf="this.todoItemsService.loading">Loading...</h2>
 
-<div *ngIf="!loading">
+<div *ngIf="!this.todoItemsService.loading">
 
     <h1>Things that need doing</h1>
 
-    <p *ngIf="!todoItems.length">Nothing to do :)</p>
+    <p *ngIf="!this.todoItemsService.todoItems.length">Nothing to do :)</p>
 
     <ul class="todolist">
-        <li *ngFor="let todoItem of todoItems">
+        <li *ngFor="let todoItem of this.todoItemsService.todoItems">
             <app-todoitem-detail 
                 [todoItem]="todoItem" 
                 (itemUpdated)="itemUpdated($event)"

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ErrorhandlerService } from './errorhandler.service';
 import { TodoItem } from './interfaces';
 import { IoService } from './io.service';
 
@@ -7,22 +8,55 @@ import { IoService } from './io.service';
 })
 export class TodoitemsService {
 
-  constructor(private io: IoService) { }
-
-  getTodoItems(): Promise<TodoItem[]> {
-    return this.io.get("api/TodoItems");
+  constructor(
+    private io: IoService, 
+    private errorHandlerService: ErrorhandlerService
+  ) { 
+    this.getTodoItems();
   }
 
-  addNewItem(newItem: TodoItem): Promise<any> {
-    return this.io.post("api/TodoItems", newItem);
+  todoItems: TodoItem[] = [];
+  loading: boolean = false;
+
+  getTodoItems(): void {
+    this.loading = true;
+    this.io.get("api/TodoItems")
+      .then(items => {
+        this.todoItems = items;
+        this.loading = false;
+      }, this.raiseError)
+      .catch(this.raiseError);
   }
 
-  updateItem(item: TodoItem): Promise<any> {
-    return this.io.put('api/TodoItems/' + item.id, item);
+  addNewItem(newItem: TodoItem): void {
+    this.loading = true;
+    this.io.post("api/TodoItems", newItem)
+      .then(() => {
+        this.getTodoItems();
+      }, this.raiseError)
+      .catch(this.raiseError);
   }
 
-  deleteItem(item: TodoItem): Promise<any> {
-    return this.io.delete('api/TodoItems/' + item.id);
+  updateItem(item: TodoItem): void {
+    this.loading = true;
+    this.io.put('api/TodoItems/' + item.id, item)
+      .then(() => {
+        this.getTodoItems();
+      }, this.raiseError)
+      .catch(this.raiseError);
+  }
+
+  deleteItem(item: TodoItem): void {
+    this.loading = true;
+    this.io.delete('api/TodoItems/' + item.id)
+      .then(() => {
+        this.getTodoItems();
+      }, this.raiseError)
+      .catch(this.raiseError);
+  }
+
+  private raiseError(error: Error): void {
+    this.errorHandlerService.add(error);
   }
 
 }

@@ -9,10 +9,6 @@ import { TodoitemsService } from '../todoitems.service';
 })
 export class TodoitemsComponent implements OnInit {
 
-  loading: boolean = false;
-
-  todoItems: TodoItem[];
-
   readonly blankNewItem: TodoItem = {
     name: "",
     isComplete: false
@@ -24,66 +20,31 @@ export class TodoitemsComponent implements OnInit {
   };
 
   constructor(
-    private todoItemsService: TodoitemsService
+    public todoItemsService: TodoitemsService
   ) {
-    this.refreshTodoItems();
+    
   }
 
   addNewItem() {
 
-    this.loading = true;
-    this.todoItemsService.addNewItem(this.newItem)
-      .then(() => {
-        this.newItem = {
-          name: this.blankNewItem.name,
-          isComplete: this.blankNewItem.isComplete
-        };
-        this.refreshTodoItems();
-      })
-      .catch(error => {
-        this.loading = false;
-      });
+    this.todoItemsService.addNewItem(this.newItem);
+    this.newItem = {
+      name: this.blankNewItem.name,
+      isComplete: this.blankNewItem.isComplete
+    };
 
   }
 
   itemUpdated(item: TodoItem) {
-    
-    this.loading = true;
-    this.todoItemsService.updateItem(item)
-      .then(() => {
-        this.refreshTodoItems();
-      })
-      .catch(error => {
-        this.loading = false;
-      });
-
+    this.todoItemsService.updateItem(item);
   }
 
   itemDeleted(item: TodoItem) {
-
-    this.loading = true;
-    this.todoItemsService.deleteItem(item)
-      .then(() => {
-        this.refreshTodoItems();
-      })
-      .catch(error => {
-        this.loading = false;
-      })
-
+    this.todoItemsService.deleteItem(item);
   }
 
   refreshTodoItems() {
-
-    this.loading = true;
-    this.todoItemsService.getTodoItems()
-      .then(items => {
-        this.todoItems = items;
-        this.loading = false;
-      })
-      .catch(error => {
-        this.loading = false;
-      });
-
+    this.todoItemsService.getTodoItems();
   }
 
   ngOnInit(): void {
